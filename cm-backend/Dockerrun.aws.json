@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "cm-backend-api",
-      "image": "ljcaliwan/cm-backend-api:latest",
+      "image": "ljcaliwan/cm-backend-api:15.09.2023.14.51.13",
       "essential": true,
       "memory": 512,
       "portMappings": [
