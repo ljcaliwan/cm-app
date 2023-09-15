@@ -10,6 +10,8 @@ public class DemoController {
 
     @GetMapping("/demo")
     public DemoMessage demoMessage(){
-        return new DemoMessage("Test Continuous Integration is Working. The value of counter is: ".formatted(++COUNTER));
+        return new DemoMessage(("" +
+                "Test Continuous Integration is Working. The value of counter is: ").formatted(++COUNTER)
+        );
     }
 }
