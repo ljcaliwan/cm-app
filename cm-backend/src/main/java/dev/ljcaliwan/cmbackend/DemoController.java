@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DemoController {
     private static int COUNTER = 0;
-    @GetMapping("/demos")
-    public String demoMessage(){
-        return ("Test Continuous Integration is Working. The value of counter is: ").formatted(++COUNTER);
+    record DemoMessage(String message){}
+
+    @GetMapping("/test")
+    public DemoMessage demoMessage(){
+        return new DemoMessage(("" +
+                "Test Continuous Integration is Working. The value of counter is: ").formatted(++COUNTER)
+        );
     }
 }
