@@ -8,7 +8,7 @@ public class DemoController {
     private static int COUNTER = 0;
     record DemoMessage(String message){}
 
-    @GetMapping("/test")
+    @GetMapping("/test-cd")
     public DemoMessage demoMessage(){
         return new DemoMessage(("" +
                 "Test Continuous Integration is Working. The value of counter is: ").formatted(++COUNTER)
