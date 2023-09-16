@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # [2] checkout/clone repo
       - name: Send Slack Message
-        id: slack
+        id: slack_deployment_started
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -56,7 +56,7 @@ jobs:
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Send Slack Message
-        id: slack
+        id: slack_building_maven
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -69,7 +69,7 @@ jobs:
       - name: Build Package Push with maven # [6] maven verify (run unit/integration test, build, and oush the image to docker hub)
         run: mvn -ntp -B verify -D docker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - name: Send Slack Message
-        id: slack
+        id: slack_docker_image_pushed_to_dockerhub
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -87,7 +87,7 @@ jobs:
           echo "Dockerrun.aws.json after updating tag"
           cat Dockerrun.aws.json
       - name: Send Slack Message
-        id: slack
+        id: slack-eb-deployment
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -109,7 +109,7 @@ jobs:
           region: ${{ secrets.EB_REGION }}
           deployment_package: cm-backend/Dockerrun.aws.json
       - name: Send Slack Message
-        id: slack
+        id: slack-committing-to-repository
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -127,7 +127,7 @@ jobs:
           git commit -m "Update Dockerrun.aws.json image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
       - name: Send Slack Message
-        id: slack
+        id: slack-deployment-and-commit-to-repository-completed
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -138,7 +138,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
-        id: slack
+        id: slack-job-status
         uses: slackapi/slack-github-action@v1.24.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
