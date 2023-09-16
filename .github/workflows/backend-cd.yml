@@ -25,6 +25,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    # set working directory
+    defaults:
+      run:
+        working-directory: ./cm-backend
 
     steps:
       - name: Send Slack Message
