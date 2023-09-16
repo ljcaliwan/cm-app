@@ -30,6 +30,8 @@ jobs:
       run:
         working-directory: cm-backend
     steps:
+      - name: List contents of working directory
+        run: ls -la
       - name: Send Slack Message
         run: >
           curl && curl -X POST -H 'Content-type: application/json' 
