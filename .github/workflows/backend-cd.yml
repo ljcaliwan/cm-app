@@ -28,7 +28,7 @@ jobs:
     # set working directory
     defaults:
       run:
-        working-directory: ./cm-backend
+        working-directory: cm-backend
     steps:
       - name: Send Slack Message
         run: >
